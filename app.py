@@ -1,7 +1,6 @@
 from geopy.distance import geodesic
 import pandas as pd
 from flask import Flask, jsonify, request
-from flask_cors import CORS, cross_origin
 
 def get_close_objects(lat, lng):
     input_coord = (lat, lng)
@@ -15,20 +14,17 @@ def get_close_objects(lat, lng):
     return result
 
 app = Flask(__name__)
-cors = CORS(app)
-app.config['CORS_HEADERS'] = 'Content-Type'
 
 @app.route('/near-you', methods = ['GET'])
-@cross_origin()
 def near_you():
     latitude = request.args['lat']
     longitude = request.args["lng"]
     result = get_close_objects(latitude, longitude)
     return jsonify(result)
 
-    # # Enable Access-Control-Allow-Origin
-    # result.headers.add("Access-Control-Allow-Origin", "*")
-    # return result
+    # Enable Access-Control-Allow-Origin
+    result.headers.add("Access-Control-Allow-Origin", "*")
+    return result
 
 if __name__ == '__main__':
     app.run(debug=True)
