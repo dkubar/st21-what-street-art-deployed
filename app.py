@@ -22,5 +22,9 @@ def near_you():
     result = get_close_objects(latitude, longitude)
     return jsonify(result)
 
+    # Enable Access-Control-Allow-Origin
+    result.headers.add("Access-Control-Allow-Origin", "*")
+    return result
+
 if __name__ == '__main__':
     app.run(debug=True)
